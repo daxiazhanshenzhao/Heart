@@ -1,0 +1,8 @@
+{
+  "order": 2,
+  "size": 1,
+  "icon": "heart:slot/body_heart",
+  "add_cosmetic": false,
+  "validators": ["curios:tag"],
+  "use_native_gui": false
+}

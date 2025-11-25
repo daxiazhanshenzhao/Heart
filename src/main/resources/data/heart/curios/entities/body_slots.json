@@ -1,0 +1,4 @@
+{
+  "entities": ["player"],
+  "slots": ["body_foot", "body_heart", "body_head","body_hand"]
+}
