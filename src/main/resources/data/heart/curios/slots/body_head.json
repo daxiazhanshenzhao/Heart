@@ -3,6 +3,5 @@
   "size": 1,
   "icon": "heart:slot/body_head",
   "add_cosmetic": false,
-  "validators": ["curios:tag"],
   "use_native_gui": false
 }

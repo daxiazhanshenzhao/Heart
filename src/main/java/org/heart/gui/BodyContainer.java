@@ -27,7 +27,8 @@ public class BodyContainer extends AbstractContainerMenu implements ICuriosMenu 
         "body_head",
         "body_heart",
         "body_hand",
-        "body_foot"
+        "body_foot",
+        "body_body"
     };
 
     //server - 服务端通过 MenuProvider 调用
@@ -65,6 +66,7 @@ public class BodyContainer extends AbstractContainerMenu implements ICuriosMenu 
         var handRight = initSlot(BODY_SLOT[2], 133, 74, 1);    // body_hand 的第 1 个槽（右手）
         var footLeft = initSlot(BODY_SLOT[3], 46, 83, 0);     // body_foot 的第 0 个槽（左脚）
         var footRight = initSlot(BODY_SLOT[3], 108, 93, 1);    // body_foot 的第 1 个槽（右脚）
+        var body = initSlot(BODY_SLOT[4], 79, 38, 0);         // body_body 的第 0 个槽
 
         if (head != null) this.addSlot(head);
         if (heart != null) this.addSlot(heart);
@@ -72,6 +74,7 @@ public class BodyContainer extends AbstractContainerMenu implements ICuriosMenu 
         if (handRight != null) this.addSlot(handRight);
         if (footLeft != null) this.addSlot(footLeft);
         if (footRight != null) this.addSlot(footRight);
+        if (body != null) this.addSlot(body);
 
         // 2. 添加玩家背包主区域 (3行9列，索引 6-32)
         for (int row = 0; row < 3; row++) {

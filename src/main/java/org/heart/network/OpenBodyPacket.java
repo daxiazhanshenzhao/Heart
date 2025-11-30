@@ -31,7 +31,7 @@ public class OpenBodyPacket {
             if (sender != null) {
                 ItemStack stack = sender.isCreative() ? msg.carried : sender.containerMenu.getCarried();
                 sender.containerMenu.setCarried(ItemStack.EMPTY);
-                Heart.LOGGER.info("发包成功");
+//                Heart.LOGGER.info("发包成功");
                 NetworkHooks.openScreen(sender, new BodyContainerProvider());
 
             }

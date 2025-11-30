@@ -1,8 +1,7 @@
 {
-  "order": 3,
+  "order": 4,
   "size": 2,
   "icon": "heart:slot/body_hand",
   "add_cosmetic": false,
-  "validators": ["curios:tag"],
   "use_native_gui": false
 }

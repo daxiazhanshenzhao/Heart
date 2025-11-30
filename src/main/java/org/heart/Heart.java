@@ -2,6 +2,7 @@ package org.heart;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -9,6 +10,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.heart.api.handle.NetworkHandler;
+import org.heart.api.init.CreativeTabInit;
+import org.heart.api.init.EffectInit;
+import org.heart.api.init.ItemInit;
 import org.heart.api.init.MenuInit;
 import org.heart.gui.BodyContainerScreen;
 import org.slf4j.Logger;
@@ -28,6 +32,9 @@ public class Heart {
 
         NetworkHandler.register();
         MenuInit.register(modEventBus);
+        ItemInit.register();
+        CreativeTabInit.register(modEventBus);
+        EffectInit.register(modEventBus);
 
         // 注册客户端设置事件
         modEventBus.addListener(this::setupClient);
