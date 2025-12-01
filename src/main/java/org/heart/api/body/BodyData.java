@@ -53,7 +53,11 @@ public class BodyData implements IBodyCapability{
         //heart
         if (getHeart().isEmpty()){
 //            player.addEffect(new MobEffectInstance(EffectInit.MISS_HEAD.get(),20,0,false,false,false));
-            player.addEffect(new MobEffectInstance(EffectInit.MISS_HAND.get(),20,0,false,false,false));
+            // 只在玩家没有效果或效果剩余时间少于10 tick时才添加，避免每tick都刷新
+            MobEffectInstance existingEffect = player.getEffect(EffectInit.MISS_HAND.get());
+            if (existingEffect == null || existingEffect.getDuration() < 10) {
+                player.addEffect(new MobEffectInstance(EffectInit.MISS_HAND.get(), 40, 1, false, false, false));
+            }
             return;
         }
         //head
