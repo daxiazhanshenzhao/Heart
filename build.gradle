@@ -89,19 +89,11 @@ minecraft {
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
 
-            // Fix JPMS conflicts - allow access to internal packages
-            jvmArgs '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
-
-            // Force all code to run in unnamed module to avoid split package issues
-            // This prevents JPMS from treating the same package in different locations as separate modules
-            property 'fml.earlyprogresswindow', 'false'
-
-             mods {
+            mods {
                 "${mod_id}" {
                     source sourceSets.main
                 }
             }
-        }
         }
 
         client {
@@ -155,44 +147,16 @@ repositories {
     // }
 }
 
-// Global dependency exclusions to prevent JPMS conflicts
-// JarJarMetadata and JarJarSelector transitively include slf4j-simple which conflicts with log4j-slf4j2-impl
-configurations.all {
-    exclude group: 'org.slf4j', module: 'slf4j-simple'
-    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-    exclude group: 'org.slf4j', module: 'slf4j-jdk14'
-    exclude group: 'org.slf4j', module: 'slf4j-nop'
-    exclude group: 'ch.qos.logback', module: 'logback-classic'
-}
-
-// Clean build/libs before running to prevent duplicate module exports
-// This prevents the built jar from being loaded alongside source code
-tasks.configureEach {
-    if (name.startsWith('prepare') && (name.contains('Run') || name.contains('Client') || name.contains('Server'))) {
-        doFirst {
-            delete fileTree('build/libs') {
-                include '*.jar'
-            }
-        }
-    }
-}
-
 dependencies {
     // Specify the version of Minecraft to use.
     // Any artifact can be supplied so long as it has a "userdev" classifier artifact and is a compatible patcher artifact.
     // The "userdev" classifier will be requested and setup by ForgeGradle.
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
-    minecraft("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-//    runtimeOnly(fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+${minecraft_version}")) {
-//        transitive = false
-//    }
-//    compileOnly(fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+${minecraft_version}")) {
-//        transitive = false
-//    }
-
-    implementation(fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+${minecraft_version}"))
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+${minecraft_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+${minecraft_version}")
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
@@ -242,12 +206,7 @@ tasks.named('jar', Jar).configure {
                 "Implementation-Vendor": mod_authors,
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
-        // Do NOT add Automatic-Module-Name to prevent JPMS module recognition
     }
-
-    // Exclude any module-info.class if it exists
-    exclude 'module-info.class'
-    exclude 'META-INF/versions/*/module-info.class'
 
     // This is the preferred method to reobfuscate your jar file
     finalizedBy 'reobfJar'
@@ -256,6 +215,3 @@ tasks.named('jar', Jar).configure {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
-
-
-

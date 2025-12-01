@@ -2,7 +2,6 @@ package org.heart.gui.component;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.Slot;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 import top.theillusivec4.curios.common.inventory.CurioSlot;
 
